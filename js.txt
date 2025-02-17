@@ -1,0 +1,11 @@
+sito di riferimento: https://eloquentjavascript.net/
+piattaforma esercizi: codewars
+
+javascript the good parts (libro): https://andersonguelphjs.github.io/OReilly_JavaScript_The_Good_Parts_May_2008.pdf
+
+javascript è un linguaggio interpretato e dinamicamente tipato.
+solitamente viene usato un browser per interpretare javascript, ma si può anche utilizzare un runtime, il più usato per javascript node.
+
+i dati che possono essere utilizzati sono numeri, stringhe, booleani e la combinazione di questi.
+
+
