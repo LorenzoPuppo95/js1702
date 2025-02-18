@@ -37,6 +37,7 @@
 //     console.log(square);
 //     i++;
 // }
+
  const secretNumber = Math.round(Math.random() * 10)
 
 while (true) {
