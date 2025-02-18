@@ -51,7 +51,7 @@ console.log(stringFinale);
 console.log("\nEsercizio 3 user input \n");
 
 //esercizio 3 user input
-const numUtente = parseInt(prompt("Inserisci un numero"))
+const numUtente = parseInt(prompt("Inserisci un numero per la creazione della scacchiera!"))
 let stringFinale2 = "";
 if (numUtente > 0) {
     for (let c = 0; c < numUtente; c++) {
@@ -122,7 +122,7 @@ for (let n = 1; n <= 100; n++) {
 //esercizio 7 per casa, chiedi numero di partenza e arriva a 0
 console.log("\nEsercizio 7 casa \n");
 
-let startNum = parseInt(prompt("Inserisci un numero di partenza"));
+let startNum = parseInt(prompt("Inserisci un numero di partenza per arrivare a 0"));
 if (startNum >= 0){
     while (startNum >= 0) {
         console.log(startNum);
@@ -138,7 +138,7 @@ if (startNum >= 0){
 //esercizio 8 per casa, chiedi numero di partenza e arriva a 100
 console.log("\nEsercizio 8 casa \n");
 
-let askedNum = parseInt(prompt("Inserisci un numero di partenza"));
+let askedNum = parseInt(prompt("Inserisci un numero di partenza per arrivare a 100"));
 if (askedNum >= 100){
     while (askedNum >= 100) {
         console.log(askedNum);
@@ -154,8 +154,24 @@ if (askedNum >= 100){
 //esercizio 9 per casa, chiedi all'utente 2 numeri e logga tutti i numeri pari compresi
 console.log("\nEsercizio 9 casa \n");
 
-let num1 = parseInt(prompt("Inserisci il primo numero"));
-let num2 = parseInt(prompt("Inserisci il secondo numero"));
+// let num1, num2;
+// while (isNaN(num1) || isNaN(num2)) {
+//     num1 = parseInt(prompt("Inserisci il primo numero!"));
+//     num2 = parseInt(prompt("Inserisci il secondo numero!"));
+//     if (isNaN(num1) || isNaN(num2)) {
+//         alert("Per favore, inserisci due numeri validi!");
+//     }
+// }
+let num1, num2;
+while (true) {
+    num1 = parseInt(prompt("Inserisci il primo numero!"));
+    num2 = parseInt(prompt("Inserisci il secondo numero!"));
+    if (!isNaN(num1) && !isNaN(num2)) {
+        break;
+    } else {
+        alert("Per favore, inserisci due numeri validi!");
+    }
+}
 let start = Math.min(num1, num2);
 let end = Math.max(num1, num2);
 for (let i = start; i <= end; i++) {
@@ -164,5 +180,18 @@ for (let i = start; i <= end; i++) {
     }
 }
 
-//esercizio 10 per casa, chiedi all'utente età e sesso e digli quante ore ha vissuto e quante ore gli mancano da vivere (basato aspettativa di vita media)console.log("\nEsercizio 3 casa \n");
+//esercizio 10 per casa, chiedi all'utente età e sesso e digli quante ore ha vissuto e quante ore gli mancano da vivere (basato aspettativa di vita media)
 console.log("\nEsercizio 10 casa \n");
+
+let etaUtente;
+do {
+    etaUtente = prompt("Inserisci la tua età!");
+    etaUtente = parseInt(etaUtente);
+} while (isNaN(etaUtente) || etaUtente <= 0);
+let genereUtente;
+do {
+    genereUtente = prompt("Inserisci il tuo genere, 'M' o 'F':");
+} while (!['M', 'm', 'F', 'f'].includes(genereUtente));
+let oreVissute = etaUtente * 365 * 24;
+let oreDaVivere = (genereUtente === 'M' || genereUtente === 'm') ? (81 - etaUtente) * 365 * 24 : (85 - etaUtente) * 365 * 24;
+alert("Hai vissuto circa " + oreVissute + " ore e te ne restano circa " + oreDaVivere + "!");
