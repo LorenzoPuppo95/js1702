@@ -37,11 +37,11 @@ function isEven(number) {
     } else {
         return isEven(number - 2);
     }
-}
+};
 
 console.log("Esercizio 2 arrow \n");
 // esercizio 2 arrow
-const return=isEven(number)  =>  {
+const isEven = (number) => {
     number = Math.abs(number);
     if (number === 0) {
         return true;
@@ -50,5 +50,4 @@ const return=isEven(number)  =>  {
     } else {
         return isEven(number - 2);
     }
-}
-
+};
