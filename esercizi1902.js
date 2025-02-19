@@ -41,13 +41,65 @@ function isEven(number) {
 
 console.log("Esercizio 2 arrow \n");
 // esercizio 2 arrow
-const isEven = (number) => {
-    number = Math.abs(number);
-    if (number === 0) {
-        return true;
-    } else if (number === 1) {
-        return false;
-    } else {
-        return isEven(number - 2);
+// const isEven = (number) => {
+//     number = Math.abs(number);
+//     if (number === 0) {
+//         return true;
+//     } else if (number === 1) {
+//         return false;
+//     } else {
+//         return isEven(number - 2);
+//     }
+// };
+
+console.log("Esercizio 3 conta B\n");
+// esercizio 3 conta B
+function countBs(str) {
+    let countedB = 0;
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] === 'B' || str[i] === 'b') {
+            countedB++;
+        }
     }
-};
+    return countedB;
+}
+let userInput = prompt("Inserisci una parola per contare le B");
+console.log(countBs(userInput));
+// // funzione arrow
+// const countBs = (str) => {
+//     let countedB = 0;
+//     for (let i = 0; i < str.length; i++) {
+//         if (str[i] === 'B' || str[i] === 'b') {
+//             countedB++;
+//         }
+//     }
+//     return countedB;
+// }
+
+
+console.log("Esercizio 3 conta lettere\n");
+// esercizio 3 conta lettere
+function countLetter(strng, letter) {
+    let count = 0;
+    let lowerLetter = letter.toLowerCase();
+    for (let i = 0; i < strng.length; i++) {
+        if (strng[i].toLowerCase() === lowerLetter) {
+            count++;
+        }
+    }
+    return count;
+}
+let wordInput = prompt("Inserisci una parola di cui contare le lettere");
+let letterInput = prompt("Inserisci quale lettera vuoi contare");
+console.log(countLetter(wordInput, letterInput));
+// // funzione arrow
+// const countLetter = (strng, letter) => {
+//     let count = 0;
+//     let lowerLetter = letter.toLowerCase();
+//     for (let i = 0; i < strng.length; i++) {
+//         if (strng[i].toLowerCase() === lowerLetter) {
+//             count++;
+//         }
+//     }
+//     return count;
+// };
