@@ -195,4 +195,5 @@ do {
 } while (!['M', 'm', 'F', 'f'].includes(genereUtente));
 let oreVissute = etaUtente * 365 * 24;
 let oreDaVivere = (genereUtente === 'M' || genereUtente === 'm') ? (81 - etaUtente) * 365 * 24 : (85 - etaUtente) * 365 * 24;
+console.log("Hai vissuto circa " + oreVissute + " ore e te ne restano circa " + oreDaVivere + "!");
 alert("Hai vissuto circa " + oreVissute + " ore e te ne restano circa " + oreDaVivere + "!");
