@@ -51,7 +51,10 @@ console.log(stringFinale);
 console.log("\nEsercizio 3 user input \n");
 
 //esercizio 3 user input
-const numUtente = parseInt(prompt("Inserisci un numero per la creazione della scacchiera!"))
+let numUtente;
+do {
+    numUtente = parseInt(prompt("Inserisci un numero per la creazione della scacchiera!"));
+} while (isNaN(numUtente) || numUtente <= 0)
 let stringFinale2 = "";
 if (numUtente > 0) {
     for (let c = 0; c < numUtente; c++) {
@@ -85,7 +88,7 @@ for (let i = 7; i >= 1; i--) {
 console.log("\nEsercizio 3 casa \n");
 
 //esercizio 1 per casa, piramide dispari
-let n = 7;
+let n = 14;
 for (let i = 1; i <= n; i += 2) {
     console.log(" ".repeat((n - i) / 2) + "#".repeat(i));
 }
@@ -122,7 +125,10 @@ for (let n = 1; n <= 100; n++) {
 //esercizio 7 per casa, chiedi numero di partenza e arriva a 0
 console.log("\nEsercizio 7 casa \n");
 
-let startNum = parseInt(prompt("Inserisci un numero di partenza per arrivare a 0"));
+let startNum;
+do {
+    startNum = parseInt(prompt("Inserisci un numero di partenza per arrivare a 0"));
+} while (isNaN(startNum));
 if (startNum >= 0){
     while (startNum >= 0) {
         console.log(startNum);
@@ -138,7 +144,10 @@ if (startNum >= 0){
 //esercizio 8 per casa, chiedi numero di partenza e arriva a 100
 console.log("\nEsercizio 8 casa \n");
 
-let askedNum = parseInt(prompt("Inserisci un numero di partenza per arrivare a 100"));
+let askedNum;
+do {
+    askedNum = parseInt(prompt("Inserisci un numero di partenza per arrivare a 100"));
+} while (isNaN(askedNum));
 if (askedNum >= 100){
     while (askedNum >= 100) {
         console.log(askedNum);
@@ -154,14 +163,6 @@ if (askedNum >= 100){
 //esercizio 9 per casa, chiedi all'utente 2 numeri e logga tutti i numeri pari compresi
 console.log("\nEsercizio 9 casa \n");
 
-// let num1, num2;
-// while (isNaN(num1) || isNaN(num2)) {
-//     num1 = parseInt(prompt("Inserisci il primo numero!"));
-//     num2 = parseInt(prompt("Inserisci il secondo numero!"));
-//     if (isNaN(num1) || isNaN(num2)) {
-//         alert("Per favore, inserisci due numeri validi!");
-//     }
-// }
 let num1, num2;
 while (true) {
     num1 = parseInt(prompt("Inserisci il primo numero!"));
