@@ -1,4 +1,5 @@
 console.log("Esercizio 1 funzione \n");
+
 // esercizio 1 funzione
 let numIns1, numIns2;
 function minimo(num1, num2) {
@@ -14,6 +15,7 @@ while (isNaN(numIns1) || isNaN(numIns2)) {
 console.log(minimo(numIns1, numIns2));
 
 console.log("Esercizio 1 arrow \n");
+
 // esercizio 1 arrow
 let numIns3, numIns4;
 const minimo2 = (num3, num4) => Math.min(num3, num4);
@@ -27,6 +29,7 @@ while (isNaN(numIns3) || isNaN(numIns4)) {
 console.log(minimo2(numIns3, numIns4));
 
 console.log("Esercizio 2 funzione \n");
+
 // esercizio 2 funzione
 function isEven(number) {
     number = Math.abs(number);
@@ -40,6 +43,7 @@ function isEven(number) {
 };
 
 console.log("Esercizio 2 arrow \n");
+
 // esercizio 2 arrow
 // const isEven = (number) => {
 //     number = Math.abs(number);
@@ -53,6 +57,7 @@ console.log("Esercizio 2 arrow \n");
 // };
 
 console.log("Esercizio 3 conta B\n");
+
 // esercizio 3 conta B
 function countBs(str) {
     let countedB = 0;
@@ -78,6 +83,7 @@ console.log(countBs(userInput));
 
 
 console.log("Esercizio 3 conta lettere\n");
+
 // esercizio 3 conta lettere
 function countLetter(strng, letter) {
     let count = 0;
@@ -92,6 +98,7 @@ function countLetter(strng, letter) {
 let wordInput = prompt("Inserisci una parola di cui contare le lettere");
 let letterInput = prompt("Inserisci quale lettera vuoi contare");
 console.log(countLetter(wordInput, letterInput));
+
 // // funzione arrow
 // const countLetter = (strng, letter) => {
 //     let count = 0;
