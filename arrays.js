@@ -316,6 +316,25 @@ const array18 = sumEvenAndSumOdd2(array7);
 // Stampa dell'array restituito dalla funzione, che contiene la somma degli elementi pari e dispari
 console.log('reduce', array18);
 
+// Definizione di un array multidimensionale (array di array)
+const array19 = [[1,2,3],[3,2,1,0],[0,0,0,0,0,0]];
+
+// Funzione che attraversa un array multidimensionale (array di array)
+function navigateArray(array){
+    // Ciclo esterno che attraversa ciascun elemento dell'array principale (che sono array)
+    for (let i = 0; i < array.length; i++) {
+        const arrayElement = array[i];  // Array interno corrente
+        // Ciclo interno che attraversa ciascun elemento dell'array corrente
+        for (let j = 0; j < arrayElement.length; j++) {
+            const element = arrayElement[j];  // Elemento corrente dell'array interno
+            // Qui puoi fare qualcosa con l'elemento, per esempio, stamparlo o manipolarlo
+        }
+    }
+}
+// Console log di 'array19'
+console.log(array19);
+// Chiamata alla funzione con 'array19'
+navigateArray(array19);
 
 // //intervallo
 let number1 = 27;  // Variabile numero1 inizializzata a 27
