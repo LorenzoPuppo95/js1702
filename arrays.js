@@ -257,7 +257,7 @@ const array14 = sumAllOddElements(array7);
 console.log('somma numeri dispari', array14);
 
 // Funzione che somma tutti gli elementi pari di un array
-function sumAllEvenElements(arrayOfNumbers){
+function sumAllEvenElements(arrayOfNumbers) {
     // Concatenazione delle funzioni: prima rimuovo i numeri dispari, poi sommo i numeri pari rimasti
     return sumAllElements(removeOddNumbers(arrayOfNumbers));
 }
@@ -284,7 +284,7 @@ function sumEvenAndSumOdd(arrayOfNumbers) {
         } else {
             accumulatorOdd = accumulatorOdd + element;   // Sommo l'elemento dispari
         }
-    }   
+    }
     // Restituisco un array con la somma degli elementi pari e la somma degli elementi dispari
     return [accumulatorEven, accumulatorOdd];
 }
@@ -306,7 +306,7 @@ function sumEvenAndSumOdd2(arrayOfNumbers) {
         } else {
             accumulator[1] = accumulator[1] + element;   // Sommo l'elemento dispari (accumulator[1])
         }
-    }    
+    }
     // Restituisco l'array "accumulator" con la somma degli elementi pari (accumulator[0]) e dispari (accumulator[1])
     return accumulator;
 }
@@ -315,3 +315,12 @@ function sumEvenAndSumOdd2(arrayOfNumbers) {
 const array18 = sumEvenAndSumOdd2(array7);
 // Stampa dell'array restituito dalla funzione, che contiene la somma degli elementi pari e dispari
 console.log('reduce', array18);
+
+
+//intervallo
+let number1 = 27;
+function stupidFunction(number) {
+    number = number * 2;
+}
+stupidFunction(number1);
+console.log(number1);

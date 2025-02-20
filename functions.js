@@ -4,13 +4,13 @@ const gridaSchiappa = function () {
 }
 
 // Verifica il tipo di "gridaSchiappa", che è una funzione
-console.log(typeof gridaSchiappa);  
+console.log(typeof gridaSchiappa);
 // Esegue la funzione gridaSchiappa
-gridaSchiappa();  
+gridaSchiappa();
 
 // Funzione dichiarata successivamente, ma chiamata prima della sua dichiarazione
 // Chiamata alla funzione gridaSchiappa2 con argomento 'pippo'
-gridaSchiappa2('pippo');  
+gridaSchiappa2('pippo');
 
 // Definizione della funzione gridaSchiappa2
 function gridaSchiappa2(name) {
@@ -20,15 +20,15 @@ function gridaSchiappa2(name) {
 // Funzione freccia che raddoppia un numero
 const logDouble = (number) => console.log(number * 2);
 // Chiamata alla funzione con l'argomento 20, stampa 40
-logDouble(20);  
+logDouble(20);
 // Stampa il risultato di logDouble(15)
-console.log(logDouble(15));  
+console.log(logDouble(15));
 
 // Funzione tradizionale per sommare due numeri
 function sum(number1, number2) {
     // Somma i due numeri e restituisce la somma
-    const sum = number1 + number2;  
-    return sum; 
+    const sum = number1 + number2;
+    return sum;
 }
 
 // Funzione arrow che somma due numeri
@@ -37,8 +37,8 @@ const sumArrow = (n1, n2) => n1 + n2;
 // Funzione freccia con valori predefiniti per i parametri
 const sumArrow2 = (n1 = 0, n2 = 0) => {
     // Somma i due numeri e restituisce la somma
-    const sum = n1 + n2;  
-    return sum;  
+    const sum = n1 + n2;
+    return sum;
 }
 
 console.log(sum(3, 5));  // Stampa la somma 8
@@ -114,7 +114,7 @@ console.log(increment());  // Stampa 6
 console.log(increment());  // Stampa 7
 
 // Esempio di ricorsione (funzione che calcola il fattoriale di un numero)
-function fact(number){
+function fact(number) {
     if (number === 0) {
         return 1;  // Caso base, fattoriale di 0 è 1
     }
