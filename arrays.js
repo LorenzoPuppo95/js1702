@@ -317,10 +317,32 @@ const array18 = sumEvenAndSumOdd2(array7);
 console.log('reduce', array18);
 
 
-//intervallo
-let number1 = 27;
+// //intervallo
+let number1 = 27;  // Variabile numero1 inizializzata a 27
+// Funzione che modifica il valore passato per parametro (ma non restituisce nulla)
 function stupidFunction(number) {
-    number = number * 2;
+    number = number * 2;  // Moltiplica il parametro per 2, ma non restituisce il risultato
 }
-stupidFunction(number1);
-console.log(number1);
+stupidFunction(number1);  // Chiamata alla funzione con number1 come parametro
+console.log(number1);  // Stampa il valore di number1 (rimane invariato, quindi 27)
+
+let arrayI1 = [27];  // Array con un solo elemento, 27
+// Funzione che modifica il primo elemento dell'array passato per parametro
+function stupidFunction2(array) {
+    array[0] = array[0] * 2;  // Modifica il primo elemento dell'array, moltiplicandolo per 2
+}
+stupidFunction2(arrayI1);  // Chiamata alla funzione con arrayI1 come parametro
+console.log(arrayI1);  // Stampa l'array modificato, il cui primo elemento diventa 54
+
+// Funzione che modifica il primo elemento dell'array clone di quello passato per parametro
+function lessStupidFunction2(array) {
+    const newArray = [];  // Crea un nuovo array vuoto
+    for (let i = 0; i < array.length; i++) {  // Cicla attraverso ogni elemento dell'array originale
+        const element = array[i];  // Prende l'elemento corrente dall'array
+        newArray.push(element);  // Aggiunge l'elemento nel nuovo array
+    }
+    newArray[0] = newArray[0] * 2;  // Moltiplica il primo elemento del nuovo array per 2
+    return newArray;  // Restituisce il nuovo array con il primo elemento modificato
+}
+const arrayI2 = lessStupidFunction2(arrayI1);  // Chiamata alla funzione con arrayI1 come parametro, salva il risultato in arrayI2
+console.log(arrayI2);  // Stampa l'array modificato, dove il primo elemento è stato moltiplicato per 2
