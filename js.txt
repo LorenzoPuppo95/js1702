@@ -10,4 +10,13 @@ i dati che possono essere utilizzati sono numeri, stringhe, booleani e la combin
 
 lo stack è una struttura dati di tipo lifo(last in-first out).
 il programma gira all'interno dello stack.
-il mean 
+
+https://www.dwitter.net
+esempio 
+function u(t) {
+x.fillRect(x.globalAlpha=.08,0,2e3,2e3)
+for(i=868;i--;)for(j=11;j--;x.clearRect(960+S(k=i/36)*r,540+C(k)*r,2,2))r=38*j^C(i/3)*S(j-t)*99}
+
+https://thebookofshaders.com/
+
+https://www.codewars.com/kata/search/javascript?q=&r%5B%5D=-8&xids=played&beta=false&order_by=rank_id%20asc
