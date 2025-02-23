@@ -92,24 +92,29 @@ function etaMedia(students) {
     return Math.round(averageAge * 10) / 10;
 }
 const etaMediaValue = etaMedia(students);
+// Stampa l'età media degli studenti
 console.log(etaMediaValue);
 
 //esercizio 3: scrivete una funzione che restituisca un array di stringhe
 //ogni stringa dovrà avere questo formato "nome/cognome"
 function getNameSurnameArray(students) {
     let nameSurnameArray = [];
+    // Itera attraverso tutti gli studenti e crea una stringa "nome/cognome" per ciascuno
     for (let i = 0; i < students.length; i++) {
         const student = students[i];
         nameSurnameArray.push(`${student.name}/${student.surname}`);
     }
+    // Restituisce l'array di stringhe "nome/cognome"
     return nameSurnameArray;
 }
 const nameSurnameArray = getNameSurnameArray(students);
+// Stampa l'array di stringhe "nome/cognome"
 console.log(nameSurnameArray);
 
 //esercizio 4: scrivete una funzione che restituisca la somma dei maschi, delle femmine e degli eventuali altri gender
 function countGenders(students) {
     let genderCounts = {};
+    // Itera attraverso tutti gli studenti e conta i generi
     for (let i = 0; i < students.length; i++) {
         const student = students[i];
         const gender = student.gender;
@@ -119,37 +124,51 @@ function countGenders(students) {
             genderCounts[gender] = 1;
         }
     }
+    // Restituisce un oggetto con il conteggio dei generi
     return genderCounts;
 }
 const genderCounts = countGenders(students);
+// Stampa la somma dei maschi, delle femmine e degli eventuali altri gender
 console.log('somma dei maschi, delle femmine e degli eventuali altri gender', genderCounts);
 
 //esercizio 5: scrivete una funzione che restutisca la media delle medie voti degli studenti
 function mediaDelleMedie(students) {
     let totalAverage = 0;
     let individualAverages = [];
+    // Itera attraverso tutti gli studenti e calcola la media dei voti per ciascuno
     for (let i = 0; i < students.length; i++) {
+        // Ottiene lo studente corrente
         const student = students[i];
+        // Ottiene i voti dello studente corrente
         const marks = student.marks;
+        // Calcola la somma dei voti utilizzando il metodo reduce
         const sumOfMarks = marks.reduce((acc, mark) => acc + mark, 0);
+        // Calcola la media dei voti
         const averageMarks = sumOfMarks / marks.length;
+        // Arrotonda la media a una cifra decimale e la aggiunge all'array individualAverages
         individualAverages.push(Math.round(averageMarks * 10) / 10);
+        // Aggiunge la media dei voti al totalAverage
         totalAverage += averageMarks;
     }
+    // Calcola la media delle medie voti degli studenti
     const overallAverage = totalAverage / students.length;
+    // Restituisce un oggetto con la media delle medie voti e le medie individuali
     return {
         overallAverage: Math.round(overallAverage * 10) / 10,
         individualAverages: individualAverages
     };
 }
 const mediaDelleMedieResult = mediaDelleMedie(students);
+// Stampa la media delle medie voti degli studenti
 console.log('media delle medie voti degli studenti', mediaDelleMedieResult.overallAverage);
+// Stampa la media di ciascuno studente
 console.log('media di ciascuno studente', mediaDelleMedieResult.individualAverages);
 
 //esercizio 6: scrivete una funzione che restituisca un oggetto così sturtturato:
 //{nationality1{student1Name, student2Name...}, nationality2{student1Name, student2Name...}}
 function groupByNationality(students) {
     let nationalityGroups = {};
+    // Itera attraverso tutti gli studenti e raggruppa i nomi per nazionalità
     for (let i = 0; i < students.length; i++) {
         const student = students[i];
         const nationality = student.nationality;
@@ -160,9 +179,11 @@ function groupByNationality(students) {
             nationalityGroups[nationality] = [name];
         }
     }
+    // Restituisce un oggetto con i gruppi di nazionalità
     return nationalityGroups;
 }
 const groupedByNationality = groupByNationality(students);
+// Stampa l'oggetto raggruppato per nazionalità
 console.log(groupedByNationality);
 
 
