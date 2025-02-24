@@ -77,23 +77,22 @@ const student8 = {
 const students = [student1, student2, student3, student4, student5, student6, student7, student8];
 
 //esercizio 2: scrivete una funzione che restituisca l'età media degli studenti
-function etaMedia(students) {
+function averageAge(students) {
     const currentYear = 2025;
     let totalAge = 0;
     // Calcola l'età di ogni studente e somma le età
     for (let i = 0; i < students.length; i++) {
         const student = students[i];
-        const age = currentYear - student.yob;
-        totalAge += age;
+        totalAge += (currentYear - student.yob);
     }
     // Calcola la media delle età
     const averageAge = totalAge / students.length;
     // Arrotonda la media a due decimali
     return Math.round(averageAge * 10) / 10;
 }
-const etaMediaValue = etaMedia(students);
+const averageAgeValue = averageAge(students);
 // Stampa l'età media degli studenti
-console.log(etaMediaValue);
+console.log(averageAgeValue);
 
 //esercizio 3: scrivete una funzione che restituisca un array di stringhe
 //ogni stringa dovrà avere questo formato "nome/cognome"
@@ -113,7 +112,7 @@ console.log(nameSurnameArray);
 
 //esercizio 4: scrivete una funzione che restituisca la somma dei maschi, delle femmine e degli eventuali altri gender
 function countGenders(students) {
-    let genderCounts = {};
+    const genderCounts = {};
     // Itera attraverso tutti gli studenti e conta i generi
     for (let i = 0; i < students.length; i++) {
         const student = students[i];
@@ -131,8 +130,8 @@ const genderCounts = countGenders(students);
 // Stampa la somma dei maschi, delle femmine e degli eventuali altri gender
 console.log('somma dei maschi, delle femmine e degli eventuali altri gender', genderCounts);
 
-//esercizio 5: scrivete una funzione che restutisca la media delle medie voti degli studenti
-function mediaDelleMedie(students) {
+//esercizio 5: scrivete una funzione che restituisca la media delle medie voti degli studenti
+function averageOfAverages(students) {
     let totalAverage = 0;
     let individualAverages = [];
     // Itera attraverso tutti gli studenti e calcola la media dei voti per ciascuno
@@ -158,19 +157,18 @@ function mediaDelleMedie(students) {
         individualAverages: individualAverages
     };
 }
-const mediaDelleMedieResult = mediaDelleMedie(students);
+const averageOfAveragesResult = averageOfAverages(students);
 // Stampa la media delle medie voti degli studenti
-console.log('media delle medie voti degli studenti', mediaDelleMedieResult.overallAverage);
+console.log('media delle medie voti degli studenti', averageOfAveragesResult.overallAverage);
 // Stampa la media di ciascuno studente
-console.log('media di ciascuno studente', mediaDelleMedieResult.individualAverages);
+console.log('media di ciascuno studente', averageOfAveragesResult.individualAverages);
 
-//esercizio 6: scrivete una funzione che restituisca un oggetto così sturtturato:
+//esercizio 6: scrivete una funzione che restituisca un oggetto così strutturato:
 //{nationality1{student1Name, student2Name...}, nationality2{student1Name, student2Name...}}
 function groupByNationality(students) {
-    let nationalityGroups = {};
+    const nationalityGroups = {};
     // Itera attraverso tutti gli studenti e raggruppa i nomi per nazionalità
-    for (let i = 0; i < students.length; i++) {
-        const student = students[i];
+    for (const student of students) {
         const nationality = student.nationality;
         const name = student.name;
         if (nationalityGroups[nationality]) {
