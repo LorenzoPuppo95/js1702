@@ -217,3 +217,75 @@ console.log(newArray21);
 
 const newArray22 = testArray.reduce((acc, numb) => acc * numb, 1);
 console.log(newArray22);
+
+
+
+// FIND
+
+function isEven(number) {
+    return number % 2 === 0;
+}
+
+console.log(testArray.filter(isEven));
+console.log(testArray.find(isEven));
+
+// SOME (c'è almeno un elemento che soddisfa la condizione?)
+
+console.log(testArray.some(isEven));
+
+// EVERY (tutti soddisfano la condizione?)
+
+console.log(testArray.every(isEven));
+
+// SORT 
+
+function sortingFunctionDecreasing(first, second){
+    if (first < second) {
+        return 1;
+    }else if(first > second){
+        return -1;
+    }else{
+        return 0;
+    }
+}
+
+function sortingFunctionincreasing(first, second){
+    if (first > second) {
+        return 1;
+    }else if(first < second){
+        return -1;
+    }else{
+        return 0;
+    }
+}
+
+// testArray.sort(sortingFunctionincreasing);
+// console.log(testArray);
+
+// testArray.sort(sortingFunctionDecreasing);
+// console.log(testArray);
+
+
+// testArray.sort((f,s) => f-s);
+// console.log(testArray);
+// testArray.sort((f,s) => s-f);
+// console.log(testArray);
+
+// //dalla a alla z
+// testStringArray.sort((fStr, sStr) => fStr.localeCompare(sStr))
+// console.log(testStringArray);
+
+// //dalla z alla a
+// testStringArray.sort((fStr, sStr) => sStr.localeCompare(fStr))
+// console.log(testStringArray);
+
+
+function betterSort(array,sortingFunction){
+    const newArray= [...array];
+    newArray.sort(sortingFunction);
+    return newArray;
+}
+
+const sortedArray = betterSort(testStringArray, (fStr, sStr) => sStr.localeCompare(fStr));
+console.log(testStringArray);
+console.log(sortedArray)
