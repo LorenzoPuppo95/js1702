@@ -218,8 +218,6 @@ console.log(newArray21);
 const newArray22 = testArray.reduce((acc, numb) => acc * numb, 1);
 console.log(newArray22);
 
-
-
 // FIND
 
 function isEven(number) {
@@ -249,7 +247,7 @@ function sortingFunctionDecreasing(first, second){
     }
 }
 
-function sortingFunctionincreasing(first, second){
+function sortingFunctionIncreasing(first, second){
     if (first > second) {
         return 1;
     }else if(first < second){
