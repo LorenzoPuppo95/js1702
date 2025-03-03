@@ -280,9 +280,3 @@ function sortByAgeAndSurname(student1,student2) {
 allStudents.sort(sortByAgeAndSurname);
 
 console.log(allStudents);
-
-//1) mettere in ordine gli studenti x nome e in caso di omonimia riordinarli per età crescente
-
-//2) mettere in ordine gli studenti per la media dei voti
-
-//3) 

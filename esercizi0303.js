@@ -119,7 +119,7 @@ Numero di studenti: ${this.students.length}`
 }
 
 class Principal extends Human {
-    constructor(name, surname, yob, nationality, gender, subject, school, teachers = []) {
+    constructor(name, surname, yob, nationality, gender, school, teachers = []) {
         super(name, surname, yob, nationality, gender);
         this.school = school;
         this.teachers = teachers;
@@ -165,7 +165,6 @@ const teacher3 = new Teacher('andrea', 'angel', 1978, 'it', 'male', 'CS', studen
 const teachers = [teacher1, teacher2, teacher3];
 const principal = new Principal('pippo', 'pippis', 1959, 'it', 'male', 'media Stipippi', teachers);
 
-
 console.log(teacher1.getBestStudent());
 console.log(teacher2.getBestStudent());
 console.log(teacher3.getBestStudent());
@@ -175,3 +174,99 @@ console.log(teacher3.studentsMean());
 console.log(principal);
 console.log(principal.getBestTeacher());
 console.log(principal.getBestStudent());
+
+//1)Crea una classe base ContoBancario:
+    //-La classe ContoBancario deve avere le seguenti proprietà: titolare (Human) saldo (numero)
+    //-La classe ContoBancario deve avere i seguenti metodi:
+        //-toString()
+        //-deposita(importo): Aggiunge l'importo al saldo.
+        //-preleva(importo): Sottrae l'importo dal saldo se ci sono fondi sufficienti, altrimenti stampa un messaggio di errore.
+
+class ContoBancario {
+    constructor(titolare, saldo) {
+        this.titolare = titolare;
+        this.saldo = saldo;
+    }
+
+    toString() {
+        return `${this.titolare.toString()}
+Saldo: ${this.saldo}`;
+    }
+
+    deposita(importo) {
+        this.saldo += importo;
+    }
+
+    preleva(importo) {
+        if (this.saldo >= importo) {
+            return this.saldo -= importo;
+        } else {
+            const errStr='Errore: fondi insufficienti';
+            console.log(errStr);
+        }
+    }
+}
+
+//2)Crea una classe derivata ContoCorrente che eredita da ContoBancario:
+    //-La classe ContoCorrente deve avere le seguenti proprietà aggiuntive:
+        //-limiteSpesa (numero)
+    //-La classe ContoCorrente deve avere i seguenti metodi aggiuntivi:
+        //-paga(importo): Sottrae l'importo dal saldo se ci sono fondi sufficienti o se l'importo è entro il limite di spesa, altrimenti stampa un messaggio di errore.
+        // se il pagamento va a buon fine il metodo aggiunge al saldo il 2% dell'importo
+
+class ContoCorrente extends ContoBancario {
+    constructor(titolare, saldo, limiteSpesa) {
+        super(titolare, saldo);
+        this.limiteSpesa = limiteSpesa;
+    }
+
+    paga(importo) {
+        if (this.saldo >= importo && this.limiteSpesa >= importo) {
+            this.saldo -= importo;
+            this.saldo += importo * 0.02;
+            return this.saldo;
+        } else {
+            const errStr='Errore: fondi insufficienti o importo oltre il limite di spesa.';
+            console.log(errStr);
+        }
+    }
+}
+        
+//3)Crea una classe derivata ContoRisparmio che eredita da ContoBancario:
+    //-La classe ContoRisparmio deve avere le seguenti proprietà aggiuntive:
+        //-sogliaBonus(numero)
+    //-La classe ContoRisparmio deve avere i seguenti metodi aggiuntivi:
+        //-applicaBonus(): Aggiunge un bonus del 2% (del saldo) al saldo se il saldo supera la soglia.
+
+class ContoRisparmio extends ContoBancario {
+    constructor(titolare, saldo, sogliaBonus) {
+        super(titolare, saldo);
+        this.sogliaBonus = sogliaBonus;
+    }
+
+    applicaBonus() {
+        if (this.saldo > this.sogliaBonus) {
+            return this.saldo += this.saldo * 0.02;
+        }
+    }
+}
+
+const human1 = new Human('Scrooge', 'mcDuck', 1947, 'Italy', 'Male');
+const contoBancario = new ContoBancario(human1, 65000000000);
+console.log(contoBancario.toString());
+contoBancario.deposita(500);
+console.log(contoBancario.toString());
+contoBancario.preleva(200);
+console.log(contoBancario.toString());
+contoBancario.preleva(650000000001500);
+
+const contoCorrente = new ContoCorrente(human1, 65000000000, 500);
+console.log(contoCorrente.toString());
+contoCorrente.paga(300);
+console.log(contoCorrente.toString());
+contoCorrente.paga(700);
+
+const contoRisparmio = new ContoRisparmio(human1, 65000000000, 800);
+console.log(contoRisparmio.toString());
+contoRisparmio.applicaBonus();
+console.log(contoRisparmio.toString());
