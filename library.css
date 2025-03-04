@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#library {
+    margin-bottom: 20px;
+}
+
+#controls {
+    margin-top: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input {
+    margin-right: 10px;
+}
+
+button {
+    padding: 5px 10px;
+}

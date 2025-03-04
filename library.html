@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management</title>
+</head>
+<body>
+    <h1>Library Management</h1>
+
+    <h2>Add Book</h2>
+    <form id="add-book-form">
+        <label for="book-title">Title:</label>
+        <input type="text" id="book-title" required>
+        <label for="book-author">Author:</label>
+        <input type="text" id="book-author" required>
+        <label for="book-isbn">ISBN:</label>
+        <input type="number" id="book-isbn" required>
+        <label for="book-type">Type:</label>
+        <select id="book-type" required>
+            <option value="regular">Regular Book</option>
+            <option value="physical">Physical Book</option>
+            <option value="ebook">eBook</option>
+        </select>
+        <div id="physical-book-properties" style="display: none;">
+            <label for="shelf-location">Shelf Location:</label>
+            <input type="number" id="shelf-location">
+        </div>
+        <div id="ebook-properties" style="display: none;">
+            <label for="file-extension">File Extension:</label>
+            <select id="file-extension">
+                <option value=""></option>
+                <option value="ePub">ePub</option>
+                <option value="mobi">mobi</option>
+                <option value="pdf">pdf</option>
+            </select>
+        </div>
+        <button type="submit">Add Book</button>
+    </form>
+
+    <h2>Add User</h2>
+    <form id="add-user-form">
+        <label for="user-name">Name:</label>
+        <input type="text" id="user-name" required>
+        <label for="user-type">Type:</label>
+        <select id="user-type" required>
+            <option value="regular">Regular User</option>
+            <option value="premium">Premium User</option>
+        </select>
+        <div id="premium-user-properties" style="display: none;">
+            <label for="max-borrow-limit">Max Borrow Limit:</label>
+            <input type="number" id="max-borrow-limit">
+        </div>
+        <button type="submit">Add User</button>
+    </form>
+
+    <h2>Modify Max Borrow Limit for Premium User</h2>
+    <form id="modify-borrow-limit-form">
+        <label for="modify-user-id">User ID:</label>
+        <input type="number" id="modify-user-id" required>
+        <label for="new-borrow-limit">New Max Borrow Limit:</label>
+        <input type="number" id="new-borrow-limit" required>
+        <button type="submit">Modify Borrow Limit</button>
+    </form>
+
+    <h2>Remove Book</h2>
+    <form id="remove-book-form">
+        <label for="remove-book-isbn">ISBN:</label>
+        <input type="number" id="remove-book-isbn" required>
+        <button type="submit">Remove Book</button>
+    </form>
+
+    <h2>Remove User</h2>
+    <form id="remove-user-form">
+        <label for="remove-user-id">User ID:</label>
+        <input type="number" id="remove-user-id" required>
+        <button type="submit">Remove User</button>
+    </form>
+
+    <h2>Borrow Book</h2>
+    <form id="borrow-book-form">
+        <label for="borrow-user-id">User ID:</label>
+        <input type="number" id="borrow-user-id" required>
+        <label for="borrow-book-isbn">Book ISBN:</label>
+        <input type="number" id="borrow-book-isbn" required>
+        <button type="submit">Borrow Book</button>
+    </form>
+
+    <h2>Return Book</h2>
+    <form id="return-book-form">
+        <label for="return-user-id">User ID:</label>
+        <input type="number" id="return-user-id" required>
+        <label for="return-book-isbn">Book ISBN:</label>
+        <input type="number" id="return-book-isbn" required>
+        <button type="submit">Return Book</button>
+    </form>
+
+    <h2>Book List</h2>
+    <ul id="book-list"></ul>
+    <button id="print-books">Print All Books</button>
+
+    <h2>User List</h2>
+    <ul id="user-list"></ul>
+    <button id="print-users">Print All Users</button>
+
+    <script src="esercizi0403.js"></script>
+</body>
+</html>

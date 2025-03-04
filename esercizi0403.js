@@ -1,57 +1,100 @@
-// gestione biblioteca
 class Book {
+    static isbnSet = new Set();
+
     constructor(title, author, isbn) {
+        if (!Number.isInteger(isbn)) {
+            throw new Error("ISBN deve essere un valore numerico intero.");
+        }
+        if (Book.isbnSet.has(isbn)) {
+            throw new Error(`Esiste già un libro con il codice ISBN ${isbn}`);
+        }
         this.title = title;
         this.author = author;
         this.isbn = isbn;
+        this.flagBorrowed = false; // New property to indicate if the book is borrowed
+        Book.isbnSet.add(isbn);
     }
 
     toStringBook() {
         const bookStr = `Titolo: ${this.title}
 Autore: ${this.author}
-Codice ISBN: ${this.isbn}`
+Codice ISBN: ${this.isbn}
+In prestito: ${this.flagBorrowed ? 'Sì' : 'No'}`;
         return bookStr;
     }
 }
 
 class PhysicalBook extends Book {
+    #shelfLocation;
     constructor(title, author, isbn, shelfLocation = 0) {
         super(title, author, isbn);
-        this.shelfLocation = shelfLocation;
+        this.#shelfLocation = shelfLocation;
     }
 
-    toString() {
-        const physBookStr = `${super.toString()}
-Scaffale: ${this.shelfLocation}`
+    get shelfLocation() {
+        return this.#shelfLocation;
+    }
+
+    set shelfLocation(value) {
+        if (!Number.isInteger(value) || value <= 1) {
+            throw new Error("shelfLocation deve essere un valore numerico intero maggiore di 1.");
+        }
+        this.#shelfLocation = value;
+    }
+
+    toStringBook() {
+        const physBookStr = `${super.toStringBook()}
+Scaffale: ${this.shelfLocation}`;
         return physBookStr;
     }
 }
 
+/**
+ * Class representing an EBook.
+ * @extends Book
+ */
 class EBook extends Book {
+    static validExtensions = ['ePub', 'mobi', 'pdf'];
+    #fileExtension;
+
     constructor(title, author, isbn, fileExtension) {
         super(title, author, isbn);
         this.fileExtension = fileExtension;
     }
 
-    toString() {
-        const eBookStr = `${super.toString()}
-Formato: ${this.fileExtension}`
+    get fileExtension() {
+        return this.#fileExtension;
+    }
+
+    set fileExtension(value) {
+        if (!EBook.validExtensions.includes(value)) {
+            throw new Error(`Formato non valido. Le estensioni accettate sono: ${EBook.validExtensions.join(', ')}`);
+        }
+        this.#fileExtension = value;
+    }
+
+    toStringBook() {
+        const eBookStr = `${super.toStringBook()}
+Formato: ${this.fileExtension}`;
         return eBookStr;
     }
 }
 
 class User {
     static maxBorrowLimit = 3;
-    constructor(name, id, borrowedBooks = []) {
+    static currentId = 1;
+
+    constructor(name, borrowedBooks = []) {
         this.name = name;
-        this.id = id;
+        this.id = User.currentId++;
         this.borrowedBooks = borrowedBooks;
     }
 
     toStringUser() {
         const userStr = `Nome: ${this.name}
 Id: ${this.id}
-Libri in prestito: ${this.borrowedBooksNumber}`
+Libri in prestito: ${this.borrowedBooksNumber}
+Limite: ${User.maxBorrowLimit}`;
         return userStr;
     }
 
@@ -62,12 +105,12 @@ Libri in prestito: ${this.borrowedBooksNumber}`
         }
 
         if (book instanceof PhysicalBook && book.shelfLocation === 0) {
-            console.log("Il libro non è disponibile");
+            console.log("Il libro richiesto non è disponibile");
             return;
         }
 
         this.borrowedBooks.push(book);
-        console.log("Hai ritirato il libro");
+        console.log(`Hai ritirato il libro ${book.title}`);
         return;
     }
 
@@ -75,7 +118,7 @@ Libri in prestito: ${this.borrowedBooksNumber}`
         const index = this.borrowedBooks.indexOf(book);
         if (index >= 0) {
             this.borrowedBooks.splice(index, 1);
-            console.log("Hai restituito il libro");
+            console.log(`Hai restituito il libro ${book.title}`);
         } else {
             console.log("Il libro non è stato trovato tra i libri in prestito");
         }
@@ -87,46 +130,82 @@ Libri in prestito: ${this.borrowedBooksNumber}`
 }
 
 class PremiumUser extends User {
-    constructor(name, id, borrowedBooks) {
-        super(name, id, borrowedBooks);
+    constructor(name, borrowedBooks) {
+        super(name, borrowedBooks);
+        this.maxBorrowLimit = User.maxBorrowLimit; // Initialize with the default max borrow limit
     }
 
     extendsMaxBorrowLimit(newLimit) {
-        if (newLimit > 3){
-            User.maxBorrowLimit = newLimit;
+        if (newLimit >= User.maxBorrowLimit) {
+            this.maxBorrowLimit = newLimit;
+            console.log(`Hai aggiornato a ${this.maxBorrowLimit} il limite di libri massimi in prestito per ${this.name}`);
+        } else {
+            console.log(`Il nuovo limite deve essere maggiore o uguale a ${User.maxBorrowLimit}`);
         }
+    }
+
+    toStringUser() {
+        const userStr = `Nome: ${this.name}
+Id: ${this.id}
+Libri in prestito: ${this.borrowedBooksNumber}
+Limite: ${this.maxBorrowLimit}`;
+        return userStr;
     }
 }
 
 class Library {
-    constructor(books=[], users=[]){
+    constructor(books = [], users = []) {
         this.books = books;
         this.users = users;
     }
 
-    addBook(book){
+    addBook(book) {
+        if (this.books.some(b => b.isbn === book.isbn)) {
+            console.log(`Errore: esiste già un libro con il codice ISBN ${book.isbn}`);
+            return;
+        }
         this.books.push(book);
+        Book.isbnSet.add(book.isbn);
+        console.log(`Libro aggiunto: ${book.toStringBook()}`); // Debug message
     }
 
-    removeBook(book){
+    removeBook(book) {
         const index = this.books.indexOf(book);
         if (index >= 0) {
             this.books.splice(index, 1);
+            Book.isbnSet.delete(book.isbn);
             console.log(`Hai rimosso il libro ${book.title} dalla libreria`);
         } else {
             console.log("Non hai trovato il libro, scemo!");
         }
     }
 
-    isBookAvailable(isbn) {
-        return this.books.some(book => book.isbn === isbn);
+    isBookAvailable(book) {
+        if (book.flagBorrowed) {
+            return false;
+        }
+        if (book instanceof PhysicalBook && book.shelfLocation === 0) {
+            return false;
+        }
+        if (book instanceof EBook && !EBook.validExtensions.includes(book.fileExtension)) {
+            return false;
+        }
+        return true;
     }
 
-    addUser(user){
+    addUser(user) {
         this.users.push(user);
     }
 
-    removeUser(user){
+    getUserById(id) {
+        return this.users.find(user => user.id === id);
+    }
+
+    getBookByIsbn(isbn) {
+        return this.books.find(book => book.isbn === isbn);
+    }
+
+    removeUser(user) {
         const index = this.users.indexOf(user);
         if (index >= 0) {
             this.users.splice(index, 1);
@@ -145,43 +224,215 @@ class Library {
     }
 
     listUsers() {
-        let listUsersString = "Elenco dei utenti registrati:\n";
+        let listUsersString = "Elenco degli utenti registrati:\n";
         this.users.forEach((user, index) => {
             listUsersString += `${index + 1}) ${user.toStringUser()}\n`;
         });
         console.log(listUsersString);
     }
 
-    borrowBook(user, book){
-        if(this.isBookAvailable){
-            user.borrowBook(book);
-            this.removeBook(book);
-        } else {
-            console.log('il libro non è disponibile!');
+    borrowBook(user, book) {
+        if (!this.books.includes(book)) {
+            console.log(`Il libro ${book.title} non è presente nella libreria e non può essere prestato.`);
+            return;
         }
+    
+        if (!this.isBookAvailable(book)) {
+            console.log(`Il libro ${book.title} non è disponibile per il prestito.`);
+            return;
+        }
+    
+        user.borrowBook(book); // Prestito del libro all'utente
+        book.flagBorrowed = true; // Mark the book as borrowed
     }
-
-    returnBook(user, book){
+    
+    returnBook(user, book) {
         const index = user.borrowedBooks.indexOf(book);
-        if(index >= 0){
-            user.returnBook(book);
-            this.addBook(book);
+        if (index >= 0) {
+            user.returnBook(book); // Remove the book from the user's borrowed list
+            book.flagBorrowed = false; // Mark the book as available
         } else {
-            console.log("l'utente non ha il libro");
+            console.log(`L'utente ${user.name} non ha il libro ${book.title}`);
         }
     }
 }
 
-// Test the listBooks and listUsers methods
-const book1 = new Book('Il Signore degli Anelli', 'J.R.R. Tolkien', 123456);
-const book2 = new PhysicalBook('Harry Potter', 'J.K. Rowling', 654321, 5);
-const book3 = new EBook('1984', 'George Orwell', 789012, '.epub');
+// #region GUI settings
+// Initialize the library
+const library = new Library();
 
-const user1 = new User('Mario Rossi', 1);
-const user2 = new PremiumUser('Luigi Bianchi', 2);
+// Function to update the book list in the UI
+function updateBookList() {
+    const bookList = document.getElementById('book-list');
+    bookList.innerHTML = '';  // Clear the current list
+    library.books.forEach(book => {
+        const li = document.createElement('li');
+        li.textContent = book.toStringBook();
+        bookList.appendChild(li);
+    });
+    console.log("Lista dei libri aggiornata"); // Debug message
+}
 
-const library = new Library([book1, book2, book3], [user1, user2]);
+// Function to update the user list in the UI
+function updateUserList() {
+    const userList = document.getElementById('user-list');
+    userList.innerHTML = '';
+    library.users.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = user.toStringUser();
+        userList.appendChild(li);
+    });
+    console.log("Lista degli utenti aggiornata"); // Debug message
+}
 
-library.listBooks();
+// Function to reset a form
+function resetForm(formId) {
+    document.getElementById(formId).reset();
+}
 
-library.listUsers();
+// Event listener for adding a book
+document.getElementById('add-book-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const title = document.getElementById('book-title').value;
+    const author = document.getElementById('book-author').value;
+    const isbn = parseInt(document.getElementById('book-isbn').value);
+    const type = document.getElementById('book-type').value;
+
+    try {
+        let book;
+        if (type === 'physical') {
+            const shelfLocation = parseInt(document.getElementById('shelf-location').value);
+            book = new PhysicalBook(title, author, isbn, shelfLocation);
+        } else if (type === 'ebook') {
+            const fileExtension = document.getElementById('file-extension').value;
+            book = new EBook(title, author, isbn, fileExtension);
+        } else {
+            book = new Book(title, author, isbn);
+        }
+        library.addBook(book);
+        updateBookList();  // Ensure this is called after adding the book
+        resetForm('add-book-form');  // Reset the form
+    } catch (error) {
+        alert(error.message);
+    }
+});
+
+// Event listener for adding a user
+document.getElementById('add-user-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const name = document.getElementById('user-name').value;
+    const type = document.getElementById('user-type').value;
+
+    let user;
+    if (type === 'premium') {
+        const maxBorrowLimit = parseInt(document.getElementById('max-borrow-limit').value);
+        user = new PremiumUser(name);
+        user.extendsMaxBorrowLimit(maxBorrowLimit);
+    } else {
+        user = new User(name);
+    }
+    library.addUser(user);
+    updateUserList();
+    resetForm('add-user-form');  // Reset the form
+});
+
+// Event listener for modifying the max borrow limit for a premium user
+document.getElementById('modify-borrow-limit-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const userId = parseInt(document.getElementById('modify-user-id').value);
+    const newLimit = parseInt(document.getElementById('new-borrow-limit').value);
+    const user = library.getUserById(userId);
+    if (user && user instanceof PremiumUser) {
+        user.extendsMaxBorrowLimit(newLimit);
+        updateUserList();
+        resetForm('modify-borrow-limit-form');  // Reset the form
+    } else {
+        alert('Premium User not found');
+    }
+});
+
+// Event listener for removing a book
+document.getElementById('remove-book-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const isbn = parseInt(document.getElementById('remove-book-isbn').value);
+    const book = library.getBookByIsbn(isbn);
+    if (book) {
+        library.removeBook(book);
+        updateBookList();
+        resetForm('remove-book-form');  // Reset the form
+    } else {
+        alert('Book not found');
+    }
+});
+
+// Event listener for removing a user
+document.getElementById('remove-user-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const userId = parseInt(document.getElementById('remove-user-id').value);
+    const user = library.getUserById(userId);
+    if (user) {
+        library.removeUser(user);
+        updateUserList();
+        resetForm('remove-user-form');  // Reset the form
+    } else {
+        alert('User not found');
+    }
+});
+
+// Event listener for borrowing a book
+document.getElementById('borrow-book-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const userId = parseInt(document.getElementById('borrow-user-id').value);
+    const bookIsbn = parseInt(document.getElementById('borrow-book-isbn').value);
+    const user = library.getUserById(userId);
+    const book = library.getBookByIsbn(bookIsbn);
+    if (user && book) {
+        library.borrowBook(user, book);
+        updateBookList();
+        updateUserList();
+        resetForm('borrow-book-form');  // Reset the form
+    } else {
+        alert('User or Book not found');
+    }
+});
+
+// Event listener for returning a book
+document.getElementById('return-book-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const userId = parseInt(document.getElementById('return-user-id').value);
+    const bookIsbn = parseInt(document.getElementById('return-book-isbn').value);
+    const user = library.getUserById(userId);
+    const book = library.getBookByIsbn(bookIsbn);
+    if (user && book) {
+        library.returnBook(user, book);
+        updateBookList();
+        updateUserList();
+        resetForm('return-book-form');  // Reset the form
+    } else {
+        alert('User or Book not found');
+    }
+});
+
+// Event listener for printing all books
+document.getElementById('print-books').addEventListener('click', function() {
+    library.listBooks();
+});
+
+// Event listener for printing all users
+document.getElementById('print-users').addEventListener('click', function() {
+    library.listUsers();
+});
+
+// Show/hide specific properties based on book type
+document.getElementById('book-type').addEventListener('change', function(event) {
+    const type = event.target.value;
+    document.getElementById('physical-book-properties').style.display = type === 'physical' ? 'block' : 'none';
+    document.getElementById('ebook-properties').style.display = type === 'ebook' ? 'block' : 'none';
+});
+
+// Show/hide specific properties based on user type
+document.getElementById('user-type').addEventListener('change', function(event) {
+    const type = event.target.value;
+    document.getElementById('premium-user-properties').style.display = type === 'premium' ? 'block' : 'none';
+});
+// #endregion
