@@ -99,4 +99,3 @@ console.log(student1.getBestMark());
 const teacher = new Teacher('andrea', 'asioli', 1978, 'it', 'male', 'CS', students);
 console.log(teacher);
 console.log(teacher.toString());
-
