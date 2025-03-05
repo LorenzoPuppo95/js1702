@@ -1,3 +1,4 @@
+// #region books
 class Book {
     static isbnSet = new Set();
 
@@ -11,7 +12,7 @@ class Book {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
-        this.flagBorrowed = false; // New property to indicate if the book is borrowed
+        this.flagBorrowed = false;
         Book.isbnSet.add(isbn);
     }
 
@@ -57,6 +58,18 @@ class EBook extends Book {
     static validExtensions = ['ePub', 'mobi', 'pdf'];
     #fileExtension;
 
+    /**
+     * The function is a constructor that initializes a new object with properties for title, author,
+     * ISBN, and file extension.
+     * @param title - Title is a string that represents the title of a book or document.
+     * @param author - The `author` parameter in the constructor function is typically used to specify
+     * the author of a book or any other written work. It is a piece of information that helps identify
+     * the creator or originator of the content.
+     * @param isbn - International Standard Book Number (ISBN) is a unique identifier for books. It is
+     * typically a 10 or 13-digit number used to identify a specific edition of a book.
+     * @param fileExtension - The `fileExtension` parameter in the constructor is used to specify the
+     * file extension of the file associated with the book. Consentiti come valori ePub, mobi, pdf.
+     */
     constructor(title, author, isbn, fileExtension) {
         super(title, author, isbn);
         this.fileExtension = fileExtension;
@@ -79,20 +92,21 @@ Formato: ${this.fileExtension}`;
         return eBookStr;
     }
 }
-
+// #endregion
+// #region user
 class User {
     static maxBorrowLimit = 3;
     static currentId = 1;
 
     constructor(name, borrowedBooks = []) {
-        this.name = name;
         this.id = User.currentId++;
+        this.name = name;        
         this.borrowedBooks = borrowedBooks;
     }
 
     toStringUser() {
-        const userStr = `Nome: ${this.name}
-Id: ${this.id}
+        const userStr = `Id: ${this.id}
+Nome: ${this.name}
 Libri in prestito: ${this.borrowedBooksNumber}
 Limite: ${User.maxBorrowLimit}`;
         return userStr;
@@ -100,17 +114,17 @@ Limite: ${User.maxBorrowLimit}`;
 
     borrowBook(book) {
         if (this.borrowedBooks.length >= User.maxBorrowLimit) {
-            console.log("Hai raggiunto il limite massimo di libri in prestito");
+            console.log(`L'utente ${this.name} ha raggiunto il limite massimo di libri in prestito`);
             return;
         }
 
-        if (book instanceof PhysicalBook && book.shelfLocation === 0) {
+        if (book.flagBorrowed) {
             console.log("Il libro richiesto non è disponibile");
             return;
         }
 
         this.borrowedBooks.push(book);
-        console.log(`Hai ritirato il libro ${book.title}`);
+        console.log(`L'utente ${this.name} ha ritirato il libro ${book.title}`);
         return;
     }
 
@@ -130,7 +144,7 @@ Limite: ${User.maxBorrowLimit}`;
 }
 
 class PremiumUser extends User {
-    constructor(name, borrowedBooks) {
+    constructor(name, borrowedBooks = []) {
         super(name, borrowedBooks);
         this.maxBorrowLimit = User.maxBorrowLimit; // Initialize with the default max borrow limit
     }
@@ -144,15 +158,32 @@ class PremiumUser extends User {
         }
     }
 
+    borrowBook(book) {
+        if (this.borrowedBooks.length >= this.maxBorrowLimit) {
+            console.log(`L'utente ${this.name} ha raggiunto il limite massimo di libri in prestito`);
+            return;
+        }
+
+        if (book.flagBorrowed) {
+            console.log("Il libro richiesto non è disponibile");
+            return;
+        }
+
+        this.borrowedBooks.push(book);
+        console.log(`L'utente ${this.name} ha ritirato il libro ${book.title}`);
+        return;
+    }
+
     toStringUser() {
-        const userStr = `Nome: ${this.name}
-Id: ${this.id}
+        const userStr = `Id: ${this.id}
+Nome: ${this.name}
 Libri in prestito: ${this.borrowedBooksNumber}
 Limite: ${this.maxBorrowLimit}`;
         return userStr;
     }
 }
-
+// #endregion
+// #region library
 class Library {
     constructor(books = [], users = []) {
         this.books = books;
@@ -181,6 +212,10 @@ class Library {
     }
 
     isBookAvailable(book) {
+        if (!this.books.includes(book)) {
+            console.log(`Il libro ${book.title} non è presente nella libreria.`);
+            return false;
+        }
         if (book.flagBorrowed) {
             return false;
         }
@@ -256,6 +291,7 @@ class Library {
         }
     }
 }
+// #endregion
 
 // #region GUI settings
 // Initialize the library
